@@ -1,0 +1,20 @@
+
+<div class="box" id="heading">
+<h1> Meme Stream </h1>
+</div>
+
+<div class="box">
+<% memes.forEach(function(meme){ %>
+
+
+<div class="post">
+ <p> <%= meme.name %></p>
+ <p> <%= meme.caption %></p>
+ <p> <%= meme.url %></p>
+ </div>
+<% }); %>
+
+ <%- include("input") -%>
+
+
+</div>
