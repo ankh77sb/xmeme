@@ -14,11 +14,10 @@ class App extends React.Component {
                isEmptyMessage:"loading...",
            }
 
-    this.MakeGetAMemeApicall = this.MakeGetAMemeApicall.bind(this);
   }
 
 
-  MakeGetAMemeApicall(){
+  MakeGetAMemeApicall = () => {
 
     getMemes().then(data => {
       if(!data){
