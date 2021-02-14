@@ -2,7 +2,7 @@
       import { API } from "../backend";
 
       export const EditAMeme = (fields) => {
-        console.log(fields);
+        //console.log(fields);
         const requestOptions = {
           method: "PATCH",
           header: {

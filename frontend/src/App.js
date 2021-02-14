@@ -1,5 +1,4 @@
 import React from "react";
-//import { Route, Switch, BrowserRouter as Router} from "react-router-dom";
 import MemeForm from "./components/form.js";
 import MemeStream from "./components/stream.js";
 import addMeme from "./helper/addMeme";
@@ -13,12 +12,11 @@ class App extends React.Component {
                errorMessage: "",
                isEmptyMessage:"loading...",
            }
-
+        this.MakeGetAMemeApicall = this.MakeGetAMemeApicall.bind(this);
   }
 
 
-  MakeGetAMemeApicall = () => {
-
+  MakeGetAMemeApicall() {
     getMemes().then(data => {
       if(!data){
          this.setState({

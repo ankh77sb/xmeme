@@ -1,31 +1,39 @@
 
       const express = require("express");
       const bodyParser = require("body-parser");
-      const _ = require("lodash");
-      const ejs = require("ejs");
       const mongoose = require("mongoose");
       const cors = require("cors");
+
+      const swaggerUi = require("swagger-ui-express");
+      const swaggerDocument = require("./swagger.json");
+      const swaggerPort = 8080;
 
       require('dotenv').config();
 
       const app = express();
+      const swaggerApp = express();
+
       app.set('view engine','ejs');
       app.use(express.static("public"));
       app.use(bodyParser.text());
       app.use(bodyParser.json());
       app.use(bodyParser.urlencoded({extended:true}));
       var jsonParser = bodyParser.json();
+
       app.use(cors());
+      swaggerApp.use(cors());
 
 
       // connecting to database
-      mongoose.connect(process.env.DATABASE,{
+      mongoose.connect("mongodb://localhost:27017/memeDB",{
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useCreateIndex: true
       },{ useFindAndModify: false }).then(() => {
          console.log("!!--------DB CONNECTED!--------!!");
       });
+
+
 
       // schemas
       const memeSchema = new mongoose.Schema({
@@ -50,6 +58,10 @@
       const Meme = mongoose.model("Meme",memeSchema);
 
       //routes
+      app.route("/")
+      .get( (req,res) => {
+        res.redirect("/memes");
+      });
       app.route("/memes")
       .get( (req,res) => {
           Meme.find().sort({ createdAt: -1 }).limit(100).exec(function(err, memes) {
@@ -151,7 +163,13 @@
           });
       });
 
-      app.listen(process.env.PORT || 8081,function(){
+      swaggerApp.use('/swagger-ui', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-        console.log(`server established on port ${process.env.PORT}`);
+      app.listen(process.env.PORT || 8081,function(){
+        let port = process.env.PORT || 8081;
+        console.log(`server established on port ${port}`);
       });
+
+      swaggerApp.listen(swaggerPort, () => {
+        console.log('Swagger up and running on '+swaggerPort);
+      })

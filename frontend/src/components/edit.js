@@ -11,12 +11,15 @@ class EditForm extends React.Component {
     this.state = {
                fields: {},
                errors: {},
+               successMessage : "",
            }
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleValidation = this.handleValidation.bind(this);
+
   }
+
 
 
   handleValidation(){
@@ -59,6 +62,7 @@ class EditForm extends React.Component {
     if(this.handleValidation()){
       let fields = this.state.fields;
       EditAMeme({"id":this.props.id, "url":fields.url, "caption":fields.caption}).then(data => {
+        console.log(data);
          if (data.error) {
            console.log(data.error);
            this.setState({
@@ -68,14 +72,15 @@ class EditForm extends React.Component {
            this.setState({
              successMessage : "Yay! your meme is now edited ! Please RELOAD TO SEE CHANGES!!"
            });
-           //this.props.MakeGetAMemeApicall();
          }
         });
-    }else{
-      this.setState({
-        successMessage : "Onnoo ! this is not valid"
-      });
-    }
+        }else{
+          this.setState({
+            successMessage : "Onnoo ! this is not valid"
+          });
+        }
+
+        this.props.MakeGetAMemeApicallFromParent();
   }
 
   render() {

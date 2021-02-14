@@ -11,12 +11,15 @@ class MemeStream extends React.Component {
   constructor(props) {
     super(props);
 
+            this.MakeGetAMemeApicallFromParent = this.MakeGetAMemeApicallFromParent.bind(this);
          }
 
          componentDidMount(){
              this.props.MakeGetAMemeApicall();
           };
-
+         MakeGetAMemeApicallFromParent (){
+           this.props.MakeGetAMemeApicall();
+         }
 
 
   render() {
@@ -29,11 +32,11 @@ class MemeStream extends React.Component {
         <div className="row">
         {
 
-          this.props.memes.map(function(meme,index) {
+          this.props.memes.map((meme,index) => {
              return <div key={index} className="d-block col-lg-5 pl-3 mx-2 my-3 shadow-sm bg-white rounded">
-                      <h3 className="list-group-item-heading">{meme.caption} <Popup trigger={<button className="align-self-right btn btn-light"><i class="fas fa-edit"></i></button>} position="right center">
-                       <div> <EditForm id={meme.id} /> </div>
-                       </Popup></h3>
+                      <div className="d-flex text-left float-right"><h3 className="list-group-item-heading">{meme.caption} <Popup trigger={<button className=" btn btn-light"><i className="fas fa-edit"></i></button>} position="bottom center">
+                       <div> <EditForm id={meme.id} MakeGetAMemeApicallFromParent={this.MakeGetAMemeApicallFromParent} /> </div>
+                       </Popup> </h3></div>
                       <p>{meme.name}</p>
                       <img className="card-img-top" src={meme.url} alt="img not found" />
                     </div>
