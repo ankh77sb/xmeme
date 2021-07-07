@@ -35,7 +35,7 @@
 
 
 
-      // schemas
+      // schemas for the database
       const memeSchema = new mongoose.Schema({
         name : {
           type: String,
@@ -62,7 +62,7 @@
       .get( (req,res) => {
         res.redirect("/memes");
       });
-      app.route("/memes")
+      app.route("/memes") // gets 100 memes
       .get( (req,res) => {
           Meme.find().sort({ createdAt: -1 }).limit(100).exec(function(err, memes) {
 
@@ -81,7 +81,7 @@
             }
           });
       })
-      .post( (req,res) =>{
+      .post( (req,res) =>{ // adds new meme
         console.log(req.body);
         let fields = req.body;
 
@@ -111,7 +111,7 @@
           });
 
       });
-
+      // gets a particular meme of given id
       app.route("/memes/:memeId")
       .get( (req,res) =>{
 
@@ -133,7 +133,7 @@
           }
         });
 
-      })
+      }) // to edit meme
       .patch( (req,res) =>{
 
         console.log(req.body);
